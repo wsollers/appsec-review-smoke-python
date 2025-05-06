@@ -1,0 +1,29 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 0f546fa..7af299f 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -8,6 +8,7 @@ version = "0.1.0"
+ description = "Deliberately vulnerable smoke target for appsec-review; do not deploy."
+ requires-python = ">=3.12"
+ dependencies = [
++  "Jinja2==2.10",
+   "PyYAML==5.3",
+   "requests==2.33.0",
+   "urllib3==1.24",
+diff --git a/requirements.txt b/requirements.txt
+index 46edf71..0dc4bb0 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -1,6 +1,7 @@
+ # Direct dependencies of the smoke service, pinned exactly. Transitive packages are pinned
+ # below so the set resolves offline and reproducibly. Nothing here is installed by the build.
+ 
++Jinja2==2.10  # report templates
+ PyYAML==5.3  # config loader (planned)
+ requests==2.33.0  # HTTP client for the fetch path
+ urllib3==1.24  # connection pool helper (planned)
+@@ -9,3 +10,4 @@ urllib3==1.24  # connection pool helper (planned)
+ certifi==2026.10.18  # via requests
+ charset-normalizer==3.4.1  # via requests
+ idna==3.6  # via requests
++MarkupSafe==3.0.2  # via Jinja2

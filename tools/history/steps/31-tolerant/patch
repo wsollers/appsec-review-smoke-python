@@ -1,0 +1,13 @@
+diff --git a/src/smoke/service.py b/src/smoke/service.py
+index 3b60d7c..9ec5eef 100644
+--- a/src/smoke/service.py
++++ b/src/smoke/service.py
+@@ -22,6 +22,8 @@ def handle_request(path, args):
+     global _requests
+     reply = None
+     status = 400
++    if path.endswith("/"):
++        path = path[:-1]
+     if path == "status":
+         reply = "ok " + VERSION
+         status = 200

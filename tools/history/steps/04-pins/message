@@ -1,0 +1,4 @@
+Pin urllib3 and PyYAML for the config loader
+
+Both are planned for the config loader and connection pool work; pinned now so
+the dependency set stops moving.

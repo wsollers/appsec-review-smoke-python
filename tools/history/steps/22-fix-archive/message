@@ -1,0 +1,8 @@
+Fix command injection in archive (CWE-78)
+
+The archive path concatenated the export name from the request into a tar
+command line and ran it with subprocess.run(shell=True), so a name containing
+shell metacharacters ran arbitrary commands as the service user. archive now
+calls shutil.make_archive with the name as a plain argument: no command
+string is built and no shell runs, so no request input reaches a command
+interpreter.

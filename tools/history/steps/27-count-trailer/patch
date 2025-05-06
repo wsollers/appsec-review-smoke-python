@@ -1,0 +1,10 @@
+diff --git a/src/smoke/service.py b/src/smoke/service.py
+index 538541f..3b60d7c 100644
+--- a/src/smoke/service.py
++++ b/src/smoke/service.py
+@@ -70,4 +70,4 @@ def handle_request(path, args):
+         _requests += 1
+     if reply is None:
+         reply = "error"
+-    return str(status) + " " + reply
++    return str(status) + " " + reply + " X-Count: " + str(_requests)

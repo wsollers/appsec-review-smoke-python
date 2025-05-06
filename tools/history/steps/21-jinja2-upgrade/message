@@ -1,0 +1,7 @@
+Upgrade Jinja2 from 2.10 to 3.1.6
+
+Jinja2 2.10 lets a sandboxed template reach str.format and escape the
+sandbox (CVE-2019-10906, GHSA-462w-v97r-4m45, fixed in 2.10.1). The report
+templates are rendered from client-selected names, so a sandbox escape would
+run template code with the service's privileges. The pin moves straight to
+3.1.6, the current release with no open advisory; MarkupSafe stays at 3.0.2.

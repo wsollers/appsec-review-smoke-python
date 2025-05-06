@@ -1,0 +1,27 @@
+diff --git a/src/smoke/service.py b/src/smoke/service.py
+index d9a50a6..2327fce 100644
+--- a/src/smoke/service.py
++++ b/src/smoke/service.py
+@@ -1,8 +1,10 @@
+ """Request dispatcher for the smoke service. Deliberately vulnerable smoke target; see README.md."""
++import logging
+ 
+ from flask import Flask, request
+ 
+ app = Flask(__name__)
++LOG = logging.getLogger("smoke")
+ VERSION = "0.1.0"
+ _requests = 0
+ 
+@@ -23,6 +25,11 @@ def handle_request(path, args):
+     elif path == "echo":
+         reply = args.get("text", "")
+         status = 200
++    elif path == "lookup" and "name" in args:
++        name = args["name"]
++        LOG.info("lookup for " + name)
++        reply = name.upper() if args.get("upper") else name
++        status = 200
+     if status >= 200 and status < 300:
+         _requests += 1
+     if reply is None:

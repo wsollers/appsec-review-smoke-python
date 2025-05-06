@@ -1,0 +1,4 @@
+Add the package manifest and pinned requirements
+
+One package under src/, built with compileall. requests and its transitive
+packages are pinned exactly so the set resolves offline.

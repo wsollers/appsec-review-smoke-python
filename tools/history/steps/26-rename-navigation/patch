@@ -1,0 +1,26 @@
+diff --git a/src/smoke/redirects.py b/src/smoke/navigation.py
+similarity index 100%
+rename from src/smoke/redirects.py
+rename to src/smoke/navigation.py
+diff --git a/src/smoke/service.py b/src/smoke/service.py
+index aa3fc39..538541f 100644
+--- a/src/smoke/service.py
++++ b/src/smoke/service.py
+@@ -3,7 +3,7 @@ import logging
+ 
+ from flask import Flask, request
+ 
+-from smoke import maintenance, redirects, tools
++from smoke import maintenance, navigation, tools
+ 
+ app = Flask(__name__)
+ LOG = logging.getLogger("smoke")
+@@ -41,7 +41,7 @@ def handle_request(path, args):
+         else:
+             status = 404
+     elif path == "return":
+-        return redirects.return_to(args.get("next", "/"))
++        return navigation.return_to(args.get("next", "/"))
+     elif path == "formula":
+         value = tools.evaluate_known(args.get("expr", ""))
+         reply = str(value)

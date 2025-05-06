@@ -1,0 +1,44 @@
+diff --git a/src/smoke/service.py b/src/smoke/service.py
+index 1f397f1..caee64a 100644
+--- a/src/smoke/service.py
++++ b/src/smoke/service.py
+@@ -3,7 +3,7 @@ import logging
+ 
+ from flask import Flask, request
+ 
+-from smoke import redirects
++from smoke import redirects, tools
+ 
+ app = Flask(__name__)
+ LOG = logging.getLogger("smoke")
+@@ -41,6 +41,10 @@ def handle_request(path, args):
+             status = 404
+     elif path == "return":
+         return redirects.return_to(args.get("next", "/"))
++    elif path == "formula":
++        value = tools.evaluate_known(args.get("expr", ""))
++        reply = str(value)
++        status = 200 if value is not None else 404
+     if status >= 200 and status < 300:
+         _requests += 1
+     if reply is None:
+diff --git a/src/smoke/tools.py b/src/smoke/tools.py
+index fe5606b..1370f07 100644
+--- a/src/smoke/tools.py
++++ b/src/smoke/tools.py
+@@ -1,6 +1,15 @@
+ """Formula helpers for the smoke service. Deliberately vulnerable smoke target; see README.md."""
+ 
++KNOWN_FORMULAS = ("2 + 2", "3 * 7", "10 / 4")
++
+ 
+ def self_test():
+     """Checks that the interpreter evaluates a constant formula as expected."""
+     return eval("1 + 1") == 2
++
++
++def evaluate_known(expr):
++    """Evaluates one of the known report formulas; anything else returns None."""
++    if expr in KNOWN_FORMULAS:
++        return eval(expr)
++    return None

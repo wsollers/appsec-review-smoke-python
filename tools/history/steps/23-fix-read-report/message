@@ -1,0 +1,8 @@
+Fix path traversal in read_report (CWE-22)
+
+The report path joined the requested name onto the report directory and
+opened the result, so "../" sequences read files outside that directory.
+read_report now canonicalises the joined path with os.path.realpath() and
+refuses any path that does not start with the report directory before
+opening it; the check runs on every path to open, so a traversal cannot
+reach the open.

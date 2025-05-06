@@ -1,0 +1,29 @@
+diff --git a/SECURITY.md b/SECURITY.md
+new file mode 100644
+index 0000000..1e6d296
+--- /dev/null
++++ b/SECURITY.md
+@@ -0,0 +1,23 @@
++# Security notes
++
++This repository is a deliberately vulnerable smoke target. It is never deployed, so there is no
++disclosure process. The entries below record the issues that were fixed in this history, so that
++the record of what changed and why is in one place.
++
++## 2026-03-14: path traversal in `read_report` (CWE-22)
++
++The `report` path joined the client-supplied name onto the report directory and opened the result,
++so a name containing `../` read files outside that directory. `read_report` now canonicalises the
++joined path with `os.path.realpath()` and refuses any result that does not start with the report
++directory before opening it.
++
++## 2026-02-26: command injection in `archive` (CWE-78)
++
++The `archive` path built a `tar` command line from the client-supplied export name and ran it
++through the shell, so shell metacharacters in the name ran arbitrary commands. `archive` now calls
++`shutil.make_archive`, which runs no shell; there is no command string.
++
++## 2026-02-10: Jinja2 2.10 (CVE-2019-10906)
++
++Jinja2 2.10 let a sandboxed template reach `str.format` and escape the sandbox
++(GHSA-462w-v97r-4m45). The pin was raised to 3.1.6, which has no open advisory.

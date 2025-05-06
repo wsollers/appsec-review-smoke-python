@@ -1,0 +1,33 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 011aa6b..01609e4 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -13,3 +13,4 @@ All notable changes to this project are documented in this file. The format foll
+ ### Security
+ 
+ - 2026-02-10: Upgraded Jinja2 from 2.10 to 3.1.6 (CVE-2019-10906, GHSA-462w-v97r-4m45, sandbox escape through str.format).
++- 2026-02-26: Fixed command injection in `archive` (CWE-78); the tarball is now built without a shell.
+diff --git a/src/smoke/maintenance.py b/src/smoke/maintenance.py
+index 067ef28..bee7fa6 100644
+--- a/src/smoke/maintenance.py
++++ b/src/smoke/maintenance.py
+@@ -1,15 +1,15 @@
+ """Maintenance helpers for the smoke service. Deliberately vulnerable smoke target; see README.md."""
+ import os
+-import subprocess
++import shutil
+ 
+ EXPORT_ROOT = "/var/lib/smoke/exports"
+ REPORT_ROOT = "/var/lib/smoke/reports"
+ 
+ 
+ def archive(name):
+-    """Packs the named export directory into a tarball next to it."""
+-    subprocess.run("tar czf " + EXPORT_ROOT + "/" + name + ".tgz -C " + EXPORT_ROOT + " " + name,
+-                   shell=True, check=False)
++    """Packs the named export directory into a tarball next to it; no shell is involved."""
++    base = os.path.join(EXPORT_ROOT, name)
++    shutil.make_archive(base, "gztar", EXPORT_ROOT, name)
+     return name + ".tgz"
+ 
+ 

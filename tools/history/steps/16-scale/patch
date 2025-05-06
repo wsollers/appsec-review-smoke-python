@@ -1,0 +1,34 @@
+diff --git a/src/smoke/service.py b/src/smoke/service.py
+index caee64a..814bb81 100644
+--- a/src/smoke/service.py
++++ b/src/smoke/service.py
+@@ -45,6 +45,9 @@ def handle_request(path, args):
+         value = tools.evaluate_known(args.get("expr", ""))
+         reply = str(value)
+         status = 200 if value is not None else 404
++    elif path == "scale":
++        reply = str(tools.scale(args.get("value", "0")))
++        status = 200
+     if status >= 200 and status < 300:
+         _requests += 1
+     if reply is None:
+diff --git a/src/smoke/tools.py b/src/smoke/tools.py
+index 1370f07..b384149 100644
+--- a/src/smoke/tools.py
++++ b/src/smoke/tools.py
+@@ -1,4 +1,5 @@
+ """Formula helpers for the smoke service. Deliberately vulnerable smoke target; see README.md."""
++import shlex
+ 
+ KNOWN_FORMULAS = ("2 + 2", "3 * 7", "10 / 4")
+ 
+@@ -13,3 +14,9 @@ def evaluate_known(expr):
+     if expr in KNOWN_FORMULAS:
+         return eval(expr)
+     return None
++
++
++def scale(value):
++    """Measures the request value: it is quoted into a string literal before evaluation."""
++    quoted = shlex.quote(value)
++    return eval("len(" + quoted + ")")

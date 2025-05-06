@@ -1,0 +1,4 @@
+Add the request dispatcher with status and echo paths
+
+One Flask route hands the path and the query arguments to the dispatcher,
+which replies by path.

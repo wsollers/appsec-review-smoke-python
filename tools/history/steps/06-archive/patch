@@ -1,0 +1,17 @@
+diff --git a/src/smoke/maintenance.py b/src/smoke/maintenance.py
+new file mode 100644
+index 0000000..3aa5bcd
+--- /dev/null
++++ b/src/smoke/maintenance.py
+@@ -0,0 +1,11 @@
++"""Maintenance helpers for the smoke service. Deliberately vulnerable smoke target; see README.md."""
++import subprocess
++
++EXPORT_ROOT = "/var/lib/smoke/exports"
++
++
++def archive(name):
++    """Packs the named export directory into a tarball next to it."""
++    subprocess.run("tar czf " + EXPORT_ROOT + "/" + name + ".tgz -C " + EXPORT_ROOT + " " + name,
++                   shell=True, check=False)
++    return name + ".tgz"

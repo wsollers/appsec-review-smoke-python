@@ -1,0 +1,28 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 01609e4..1a51454 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -14,3 +14,4 @@ All notable changes to this project are documented in this file. The format foll
+ 
+ - 2026-02-10: Upgraded Jinja2 from 2.10 to 3.1.6 (CVE-2019-10906, GHSA-462w-v97r-4m45, sandbox escape through str.format).
+ - 2026-02-26: Fixed command injection in `archive` (CWE-78); the tarball is now built without a shell.
++- 2026-03-14: Fixed path traversal in `read_report` (CWE-22); paths are canonicalised and confined to the report directory.
+diff --git a/src/smoke/maintenance.py b/src/smoke/maintenance.py
+index bee7fa6..61bb82b 100644
+--- a/src/smoke/maintenance.py
++++ b/src/smoke/maintenance.py
+@@ -14,6 +14,12 @@ def archive(name):
+ 
+ 
+ def read_report(name):
+-    """Returns the text of a report in the report directory."""
+-    with open(REPORT_ROOT + "/" + name) as handle:
++    """Returns the text of a report in the report directory.
++
++    The joined path is canonicalised and must stay under the report directory.
++    """
++    path = os.path.realpath(os.path.join(REPORT_ROOT, name))
++    if not path.startswith(REPORT_ROOT + "/"):
++        raise ValueError("report outside the report directory")
++    with open(path) as handle:
+         return handle.read()

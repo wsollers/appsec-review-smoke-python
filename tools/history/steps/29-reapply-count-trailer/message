@@ -1,0 +1,3 @@
+Reapply "Append the request counter to every reply"
+
+The client now reads the trailer.

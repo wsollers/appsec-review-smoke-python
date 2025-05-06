@@ -1,0 +1,13 @@
+diff --git a/src/smoke/tools.py b/src/smoke/tools.py
+index fd7d189..2d0bca9 100644
+--- a/src/smoke/tools.py
++++ b/src/smoke/tools.py
+@@ -11,6 +11,8 @@ def self_test():
+ 
+ def evaluate_known(expr):
+     """Evaluates one of the known report formulas; anything else returns None."""
++    # The membership test on the only path to the evaluation limits the operand to the
++    # three literals above (reviewed 2026-03; see the commit log).
+     if expr in KNOWN_FORMULAS:
+         return eval(expr)
+     return None

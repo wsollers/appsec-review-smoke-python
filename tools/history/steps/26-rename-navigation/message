@@ -1,0 +1,3 @@
+Rename redirects.py to navigation.py
+
+The module will hold the other navigation helpers too.

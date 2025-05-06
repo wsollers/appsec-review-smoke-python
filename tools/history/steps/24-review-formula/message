@@ -1,0 +1,7 @@
+Review the evaluate_known code evaluation report
+
+A scanner flagged the eval in evaluate_known as evaluation of request input.
+The expression is tested for membership in KNOWN_FORMULAS, three literal
+strings, on the only path that reaches the eval, so no other text can be
+evaluated: not exploitable, and the call is unchanged. Documented the check
+in a comment so the next reader does not reopen it.
