@@ -1,6 +1,7 @@
 # Direct dependencies of the smoke service, pinned exactly. Transitive packages are pinned
 # below so the set resolves offline and reproducibly. Nothing here is installed by the build.
 
+Jinja2==2.10  # report templates
 PyYAML==5.3  # config loader (planned)
 requests==2.33.0  # HTTP client for the fetch path
 urllib3==1.24  # connection pool helper (planned)
@@ -9,3 +10,4 @@ urllib3==1.24  # connection pool helper (planned)
 certifi==2026.10.18  # via requests
 charset-normalizer==3.4.1  # via requests
 idna==3.6  # via requests
+MarkupSafe==3.0.2  # via Jinja2
