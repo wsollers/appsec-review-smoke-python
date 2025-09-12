@@ -1,8 +1,10 @@
 """Request dispatcher for the smoke service. Deliberately vulnerable smoke target; see README.md."""
+import logging
 
 from flask import Flask, request
 
 app = Flask(__name__)
+LOG = logging.getLogger("smoke")
 VERSION = "0.1.0"
 _requests = 0
 
@@ -22,6 +24,11 @@ def handle_request(path, args):
         status = 200
     elif path == "echo":
         reply = args.get("text", "")
+        status = 200
+    elif path == "lookup" and "name" in args:
+        name = args["name"]
+        LOG.info("lookup for " + name)
+        reply = name.upper() if args.get("upper") else name
         status = 200
     if status >= 200 and status < 300:
         _requests += 1
