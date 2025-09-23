@@ -30,6 +30,13 @@ def handle_request(path, args):
         LOG.info("lookup for " + name)
         reply = name.upper() if args.get("upper") else name
         status = 200
+    elif path == "config":
+        key = args.get("key", "")
+        if key in ("debug", "verbose"):
+            reply = key + "=on"
+            status = 200
+        else:
+            status = 404
     if status >= 200 and status < 300:
         _requests += 1
     if reply is None:
