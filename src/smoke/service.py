@@ -3,6 +3,8 @@ import logging
 
 from flask import Flask, request
 
+from smoke import redirects
+
 app = Flask(__name__)
 LOG = logging.getLogger("smoke")
 VERSION = "0.1.0"
@@ -37,6 +39,8 @@ def handle_request(path, args):
             status = 200
         else:
             status = 404
+    elif path == "return":
+        return redirects.return_to(args.get("next", "/"))
     if status >= 200 and status < 300:
         _requests += 1
     if reply is None:
