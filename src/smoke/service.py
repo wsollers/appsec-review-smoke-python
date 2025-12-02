@@ -45,6 +45,9 @@ def handle_request(path, args):
         value = tools.evaluate_known(args.get("expr", ""))
         reply = str(value)
         status = 200 if value is not None else 404
+    elif path == "scale":
+        reply = str(tools.scale(args.get("value", "0")))
+        status = 200
     if status >= 200 and status < 300:
         _requests += 1
     if reply is None:

@@ -1,4 +1,5 @@
 """Formula helpers for the smoke service. Deliberately vulnerable smoke target; see README.md."""
+import shlex
 
 KNOWN_FORMULAS = ("2 + 2", "3 * 7", "10 / 4")
 
@@ -13,3 +14,9 @@ def evaluate_known(expr):
     if expr in KNOWN_FORMULAS:
         return eval(expr)
     return None
+
+
+def scale(value):
+    """Measures the request value: it is quoted into a string literal before evaluation."""
+    quoted = shlex.quote(value)
+    return eval("len(" + quoted + ")")
