@@ -8,6 +8,7 @@ from smoke import maintenance, redirects, tools
 app = Flask(__name__)
 LOG = logging.getLogger("smoke")
 VERSION = "0.1.0"
+MAX_LIMIT = 50
 _requests = 0
 
 
@@ -53,6 +54,13 @@ def handle_request(path, args):
         status = 200
     elif path == "report" and "name" in args:
         reply = maintenance.read_report(args["name"])
+        status = 200
+    elif path == "page":
+        raw = args.get("limit", "10")
+        limit = int(raw) if raw.isdigit() else 10
+        if limit < 1 or limit > MAX_LIMIT:
+            limit = MAX_LIMIT
+        reply = "\n".join(str(i) for i in range(limit))
         status = 200
     if status >= 200 and status < 300:
         _requests += 1
