@@ -62,6 +62,10 @@ def handle_request(path, args):
             limit = MAX_LIMIT
         reply = "\n".join(str(i) for i in range(limit))
         status = 200
+    elif path == "headers":
+        wanted = [h for h in ("User-Agent", "Accept") if h in args and args[h]]
+        reply = ", ".join(wanted) or "none"
+        status = 200
     if status >= 200 and status < 300:
         _requests += 1
     if reply is None:
