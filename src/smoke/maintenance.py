@@ -14,6 +14,12 @@ def archive(name):
 
 
 def read_report(name):
-    """Returns the text of a report in the report directory."""
-    with open(REPORT_ROOT + "/" + name) as handle:
+    """Returns the text of a report in the report directory.
+
+    The joined path is canonicalised and must stay under the report directory.
+    """
+    path = os.path.realpath(os.path.join(REPORT_ROOT, name))
+    if not path.startswith(REPORT_ROOT + "/"):
+        raise ValueError("report outside the report directory")
+    with open(path) as handle:
         return handle.read()
