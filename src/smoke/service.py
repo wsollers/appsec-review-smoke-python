@@ -3,7 +3,7 @@ import logging
 
 from flask import Flask, request
 
-from smoke import maintenance, redirects, tools
+from smoke import maintenance, navigation, tools
 
 app = Flask(__name__)
 LOG = logging.getLogger("smoke")
@@ -41,7 +41,7 @@ def handle_request(path, args):
         else:
             status = 404
     elif path == "return":
-        return redirects.return_to(args.get("next", "/"))
+        return navigation.return_to(args.get("next", "/"))
     elif path == "formula":
         value = tools.evaluate_known(args.get("expr", ""))
         reply = str(value)
