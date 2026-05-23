@@ -70,4 +70,4 @@ def handle_request(path, args):
         _requests += 1
     if reply is None:
         reply = "error"
-    return str(status) + " " + reply + " X-Count: " + str(_requests)
+    return str(status) + " " + reply
