@@ -22,6 +22,8 @@ def handle_request(path, args):
     global _requests
     reply = None
     status = 400
+    if path.endswith("/"):
+        path = path[:-1]
     if path == "status":
         reply = "ok " + VERSION
         status = 200
