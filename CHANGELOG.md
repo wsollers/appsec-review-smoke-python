@@ -10,6 +10,11 @@ All notable changes to this project are documented in this file. The format foll
 - Smoke service with status, echo, lookup and config paths.
 - Pinned dependency set in `requirements.txt` and `pyproject.toml`.
 
+### Changed
+
+- Builds with `python3 -m compileall -q .`.
+- `tools/make-history.sh` reproduces the commit graph.
+
 ### Security
 
 - 2026-02-10: Upgraded Jinja2 from 2.10 to 3.1.6 (CVE-2019-10906, GHSA-462w-v97r-4m45, sandbox escape through str.format).
