@@ -73,3 +73,13 @@ def handle_request(path, args):
     if reply is None:
         reply = "error"
     return str(status) + " " + reply + " X-Count: " + str(_requests)
+
+
+def main():
+    if not tools.self_test():
+        raise SystemExit("self test failed")
+    app.run()
+
+
+if __name__ == "__main__":
+    main()
