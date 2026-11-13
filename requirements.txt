@@ -4,7 +4,7 @@
 Jinja2==3.1.6  # report templates
 PyYAML==5.3  # config loader (planned)
 requests==2.33.0  # HTTP client for the fetch path
-urllib3==1.24  # connection pool helper (planned)
+urllib3==2.8.0  # connection pool helper (planned)
 
 # Transitive pins
 certifi==2026.10.18  # via requests
